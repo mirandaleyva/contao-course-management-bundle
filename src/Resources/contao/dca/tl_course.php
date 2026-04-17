@@ -5,6 +5,7 @@ use Contao\DC_Table;
 $GLOBALS['TL_DCA']['tl_course'] = [
     'config' => [
         'dataContainer' => DC_Table::class,
+        'ctable' => ['tl_course_date'],
         'enableVersioning' => true,
         'sql' => [
             'keys' => [
@@ -53,7 +54,7 @@ $GLOBALS['TL_DCA']['tl_course'] = [
     ],
 
     'palettes' => [
-        'default' => '{title_legend},name,form_reference;{publish_legend},published',
+        'default' => '{title_legend},title,form_reference;{publish_legend},published',
     ],
 
     'fields' => [

@@ -21,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
             'fields' => ['sorting'],
             'flag' => 1,
             'panelLayout' => 'sort,filter;search,limit',
-            'headerFields' => ['name'],
+            'headerFields' => ['title'],
             'child_record_callback' => null,
         ],
         'label' => [
@@ -65,7 +65,7 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
             'sql' => "int(10) unsigned NOT NULL auto_increment",
         ],
         'pid' => [
-            'foreignKey' => 'tl_course.name',
+            'foreignKey' => 'tl_course.title',
             'relation' => [
                 'type' => 'belongsTo',
                 'load' => 'lazy',
