@@ -1,6 +1,6 @@
 <?php
 
-namespace MirandaLeyva\ContaoManagementBundle\Model;
+namespace MirandaLeyva\ContaoCourseManagementBundle\Model;
 
 use Contao\Model;
 

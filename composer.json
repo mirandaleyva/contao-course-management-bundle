@@ -1,5 +1,5 @@
 {
-  "name": "mirandaleyva/contao-management-bundle",
+  "name": "mirandaleyva/contao-course-management-bundle",
   "type": "contao-bundle",
   "description": "Contao 5.7 bundle for managing courses and course dates.",
   "license": "MIT",
@@ -10,11 +10,11 @@
   },
   "autoload": {
     "psr-4": {
-      "MirandaLeyva\\ContaoManagementBundle\\": "src/"
+      "MirandaLeyva\\ContaoCourseManagementBundle\\": "src/"
     }
   },
   "extra": {
-    "contao-manager-plugin": "MirandaLeyva\\ContaoManagementBundle\\ContaoManager\\Plugin"
+    "contao-manager-plugin": "MirandaLeyva\\ContaoCourseManagementBundle\\ContaoManager\\Plugin"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
