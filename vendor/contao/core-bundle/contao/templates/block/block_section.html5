@@ -1,0 +1,6 @@
+
+<div id="<?= $this->id ?>">
+  <div class="inside">
+    <?= $this->content ?>
+  </div>
+</div>

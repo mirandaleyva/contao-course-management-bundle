@@ -1,0 +1,494 @@
+/*!
+ * This file is part of Contao.
+ *
+ * (c) Leo Feyer
+ *
+ * @license LGPL-3.0-or-later
+ */
+
+.download-element a {
+	padding:3px 6px 3px 22px;
+	background:url("../images/iconPLAIN.svg") left center no-repeat;
+}
+
+ul.enclosure {
+	padding-left:0;
+}
+
+li.download-element {
+	list-style-type:none;
+}
+
+/* Application files */
+.ext-xl a {
+	background-image:url("../images/iconXL.svg");
+}
+
+.ext-xls a {
+	background-image:url("../images/iconXLS.svg");
+}
+
+.ext-xlsx a {
+	background-image:url("../images/iconXLSX.svg");
+}
+
+.ext-hqx a {
+	background-image:url("../images/iconHQX.svg");
+}
+
+.ext-cpt a {
+	background-image:url("../images/iconCPT.svg");
+}
+
+.ext-bin a {
+	background-image:url("../images/iconBIN.svg");
+}
+
+.ext-doc a {
+	background-image:url("../images/iconDOC.svg");
+}
+
+.ext-docx a {
+	background-image:url("../images/iconDOCX.svg");
+}
+
+.ext-word a {
+	background-image:url("../images/iconWORD.svg");
+}
+
+.ext-cto a {
+	background-image:url("../images/iconCTO.svg");
+}
+
+.ext-dms a {
+	background-image:url("../images/iconDMS.svg");
+}
+
+.ext-lha a {
+	background-image:url("../images/iconLHA.svg");
+}
+
+.ext-lzh a {
+	background-image:url("../images/iconLZH.svg");
+}
+
+.ext-exe a {
+	background-image:url("../images/iconEXE.svg");
+}
+
+.ext-class a {
+	background-image:url("../images/iconCLASS.svg");
+}
+
+.ext-so a {
+	background-image:url("../images/iconSO.svg");
+}
+
+.ext-sea a {
+	background-image:url("../images/iconSEA.svg");
+}
+
+.ext-dll a {
+	background-image:url("../images/iconDLL.svg");
+}
+
+.ext-oda a {
+	background-image:url("../images/iconODA.svg");
+}
+
+.ext-pdf a {
+	background-image:url("../images/iconPDF.svg");
+}
+
+.ext-ai a {
+	background-image:url("../images/iconAI.svg");
+}
+
+.ext-eps a {
+	background-image:url("../images/iconEPS.svg");
+}
+
+.ext-ps a {
+	background-image:url("../images/iconPS.svg");
+}
+
+.ext-pps a {
+	background-image:url("../images/iconPPS.svg");
+}
+
+.ext-ppt a {
+	background-image:url("../images/iconPPT.svg");
+}
+
+.ext-pptx a {
+	background-image:url("../images/iconPPTX.svg");
+}
+
+.ext-smi a {
+	background-image:url("../images/iconSMI.svg");
+}
+
+.ext-smil a {
+	background-image:url("../images/iconSMIL.svg");
+}
+
+.ext-mif a {
+	background-image:url("../images/iconMIF.svg");
+}
+
+.ext-odc a {
+	background-image:url("../images/iconODC.svg");
+}
+
+.ext-odf a {
+	background-image:url("../images/iconODF.svg");
+}
+
+.ext-odg a {
+	background-image:url("../images/iconODG.svg");
+}
+
+.ext-odi a {
+	background-image:url("../images/iconODI.svg");
+}
+
+.ext-odp a {
+	background-image:url("../images/iconODP.svg");
+}
+
+.ext-ods a {
+	background-image:url("../images/iconODS.svg");
+}
+
+.ext-odt a {
+	background-image:url("../images/iconODT.svg");
+}
+
+.ext-wbxml a {
+	background-image:url("../images/iconWBXML.svg");
+}
+
+.ext-wmlc a {
+	background-image:url("../images/iconWMLC.svg");
+}
+
+.ext-dmg a {
+	background-image:url("../images/iconDMG.svg");
+}
+
+.ext-dcr a {
+	background-image:url("../images/iconDCR.svg");
+}
+
+.ext-dir a {
+	background-image:url("../images/iconDIR.svg");
+}
+
+.ext-dxr a {
+	background-image:url("../images/iconDXR.svg");
+}
+
+.ext-dvi a {
+	background-image:url("../images/iconDVI.svg");
+}
+
+.ext-gtar a {
+	background-image:url("../images/iconGTAR.svg");
+}
+
+.ext-inc a {
+	background-image:url("../images/iconINC.svg");
+}
+
+.ext-php a {
+	background-image:url("../images/iconPHP.svg");
+}
+
+.ext-php3 a {
+	background-image:url("../images/iconPHP3.svg");
+}
+
+.ext-php4 a {
+	background-image:url("../images/iconPHP4.svg");
+}
+
+.ext-php5 a {
+	background-image:url("../images/iconPHP5.svg");
+}
+
+.ext-phtml a {
+	background-image:url("../images/iconPHTML.svg");
+}
+
+.ext-phps a {
+	background-image:url("../images/iconPHPS.svg");
+}
+
+.ext-js a {
+	background-image:url("../images/iconJS.svg");
+}
+
+.ext-psd a {
+	background-image:url("../images/iconPSD.svg");
+}
+
+.ext-rar a {
+	background-image:url("../images/iconRAR.svg");
+}
+
+.ext-fla a {
+	background-image:url("../images/iconFLA.svg");
+}
+
+.ext-swf a {
+	background-image:url("../images/iconSWF.svg");
+}
+
+.ext-sit a {
+	background-image:url("../images/iconSIT.svg");
+}
+
+.ext-tar a {
+	background-image:url("../images/iconTAR.svg");
+}
+
+.ext-tgz a {
+	background-image:url("../images/iconTGZ.svg");
+}
+
+.ext-xhtml a {
+	background-image:url("../images/iconXHTML.svg");
+}
+
+.ext-xht a {
+	background-image:url("../images/iconXHT.svg");
+}
+
+.ext-zip a {
+	background-image:url("../images/iconZIP.svg");
+}
+
+/* Audio files */
+.ext-m4a a {
+	background-image:url("../images/iconM4A.svg");
+}
+
+.ext-mp3 a {
+	background-image:url("../images/iconMP3.svg");
+}
+
+.ext-wma a {
+	background-image:url("../images/iconWMA.svg");
+}
+
+.ext-mpeg a {
+	background-image:url("../images/iconMPEG.svg");
+}
+
+.ext-wav a {
+	background-image:url("../images/iconWAV.svg");
+}
+
+.ext-ogg a {
+	background-image:url("../images/iconOGG.svg");
+}
+
+.ext-mid a {
+	background-image:url("../images/iconMID.svg");
+}
+
+.ext-midi a {
+	background-image:url("../images/iconMIDI.svg");
+}
+
+.ext-aif a {
+	background-image:url("../images/iconAIF.svg");
+}
+
+.ext-aiff a {
+	background-image:url("../images/iconAIFF.svg");
+}
+
+.ext-aifc a {
+	background-image:url("../images/iconAIFC.svg");
+}
+
+.ext-ram a {
+	background-image:url("../images/iconRAM.svg");
+}
+
+.ext-rm a {
+	background-image:url("../images/iconRM.svg");
+}
+
+.ext-rpm a {
+	background-image:url("../images/iconRPM.svg");
+}
+
+.ext-ra a {
+	background-image:url("../images/iconRA.svg");
+}
+
+/* Images */
+.ext-bmp a {
+	background-image:url("../images/iconBMP.svg");
+}
+
+.ext-gif a {
+	background-image:url("../images/iconGIF.svg");
+}
+
+.ext-jpeg a {
+	background-image:url("../images/iconJPEG.svg");
+}
+
+.ext-jpg a {
+	background-image:url("../images/iconJPG.svg");
+}
+
+.ext-jpe a {
+	background-image:url("../images/iconJPE.svg");
+}
+
+.ext-png a {
+	background-image:url("../images/iconPNG.svg");
+}
+
+.ext-tiff a {
+	background-image:url("../images/iconTIFF.svg");
+}
+
+.ext-tif a {
+	background-image:url("../images/iconTIF.svg");
+}
+
+.ext-svg a {
+	background-image:url("../images/iconSVG.svg");
+}
+
+.ext-svgz a {
+	background-image:url("../images/iconSVGZ.svg");
+}
+
+.ext-webp a {
+	background-image:url("../images/iconWEBP.svg");
+}
+
+.ext-avif a {
+	background-image:url("../images/iconAVIF.svg");
+}
+
+.ext-heic a {
+	background-image:url("../images/iconHEIC.svg");
+}
+
+.ext-jxl a {
+	background-image:url("../images/iconJXL.svg");
+}
+
+/* Mailbox files */
+.ext-eml a {
+	background-image:url("../images/iconEML.svg");
+}
+
+/* Text files */
+.ext-asp a {
+	background-image:url("../images/iconASP.svg");
+}
+
+.ext-css a {
+	background-image:url("../images/iconCSS.svg");
+}
+
+.ext-scss a {
+	background-image:url("../images/iconSCSS.svg");
+}
+
+.ext-less a {
+	background-image:url("../images/iconLESS.svg");
+}
+
+.ext-html a {
+	background-image:url("../images/iconHTML.svg");
+}
+
+.ext-htm a {
+	background-image:url("../images/iconHTM.svg");
+}
+
+.ext-md a {
+	background-image:url("../images/iconMD.svg");
+}
+
+.ext-shtml a {
+	background-image:url("../images/iconSHTML.svg");
+}
+
+.ext-txt a {
+	background-image:url("../images/iconTXT.svg");
+}
+
+.ext-text a {
+	background-image:url("../images/iconTEXT.svg");
+}
+
+.ext-log a {
+	background-image:url("../images/iconLOG.svg");
+}
+
+.ext-rtx a {
+	background-image:url("../images/iconRTX.svg");
+}
+
+.ext-rtf a {
+	background-image:url("../images/iconRTF.svg");
+}
+
+.ext-xml a {
+	background-image:url("../images/iconXML.svg");
+}
+
+.ext-xsl a {
+	background-image:url("../images/iconXSL.svg");
+}
+
+/* Videos */
+.ext-mp4 a {
+	background-image:url("../images/iconMP4.svg");
+}
+
+.ext-m4v a {
+	background-image:url("../images/iconM4V.svg");
+}
+
+.ext-mov a {
+	background-image:url("../images/iconMOV.svg");
+}
+
+.ext-wmv a {
+	background-image:url("../images/iconWMV.svg");
+}
+
+.ext-webm a {
+	background-image:url("../images/iconWEBM.svg");
+}
+
+.ext-qt a {
+	background-image:url("../images/iconQT.svg");
+}
+
+.ext-rv a {
+	background-image:url("../images/iconRV.svg");
+}
+
+.ext-avi a {
+	background-image:url("../images/iconAVI.svg");
+}
+
+.ext-ogv a {
+	background-image:url("../images/iconOGV.svg");
+}
+
+.ext-movie a {
+	background-image:url("../images/iconMOVIE.svg");
+}

@@ -1,0 +1,13 @@
+{
+    "require": {
+        "contao/easy-coding-standard": "^5.0"
+    },
+    "conflict": {
+        "slevomat/coding-standard": ">= 8.16"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

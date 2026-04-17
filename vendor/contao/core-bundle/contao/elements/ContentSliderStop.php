@@ -1,0 +1,48 @@
+<?php
+
+/*
+ * This file is part of Contao.
+ *
+ * (c) Leo Feyer
+ *
+ * @license LGPL-3.0-or-later
+ */
+
+namespace Contao;
+
+use Contao\CoreBundle\Controller\ContentElement\SwiperController;
+
+trigger_deprecation('contao/core-bundle', '5.6', 'Using the "%s" class is deprecated and will no longer work in Contao 6. Use the "%s" class instead.', ContentSliderStop::class, SwiperController::class);
+
+/**
+ * Front end content element "slider" (wrapper stop).
+ *
+ * @deprecated Deprecated since Contao 5.6, to be removed in Contao 6;
+ *             use Contao\CoreBundle\Controller\ContentElement\SwiperController instead.
+ */
+class ContentSliderStop extends ContentElement
+{
+	/**
+	 * Template
+	 * @var string
+	 */
+	protected $strTemplate = 'ce_sliderStop';
+
+	/**
+	 * Generate the content element
+	 */
+	protected function compile()
+	{
+		$request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+		if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
+		{
+			$this->strTemplate = 'be_wildcard';
+			$this->Template = new BackendTemplate($this->strTemplate);
+		}
+
+		// Previous and next labels
+		$this->Template->previous = $GLOBALS['TL_LANG']['MSC']['previous'];
+		$this->Template->next = $GLOBALS['TL_LANG']['MSC']['next'];
+	}
+}
