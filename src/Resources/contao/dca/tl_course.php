@@ -160,7 +160,7 @@ class tl_course
     return $options;
   }
 
-  public function preventDeleteIfDatesExist(DataContainer $dc): void
+  public function preventDeleteIfDatesExist($dc): void
   {
     if (!$dc->id) {
       return;
