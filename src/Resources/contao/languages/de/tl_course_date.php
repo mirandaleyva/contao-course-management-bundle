@@ -2,11 +2,16 @@
 
 $GLOBALS['TL_LANG']['tl_course_date']['start_date'] = ['Startdatum', 'Geben Sie das Startdatum ein.'];
 $GLOBALS['TL_LANG']['tl_course_date']['end_date'] = ['Enddatum', 'Geben Sie das Enddatum ein.'];
+$GLOBALS['TL_LANG']['tl_course_date']['add_time'] = ['Zeit hinzufügen', 'Aktivieren Sie diese Option, wenn für den Termin eine Zeit angegeben werden soll.'];
 $GLOBALS['TL_LANG']['tl_course_date']['start_time'] = ['Startzeit', 'Geben Sie die Startzeit ein.'];
-$GLOBALS['TL_LANG']['tl_course_date']['add_time'] = ['Zeit hinzufügen'];
 $GLOBALS['TL_LANG']['tl_course_date']['end_time'] = ['Endzeit', 'Geben Sie die Endzeit ein.'];
-$GLOBALS['TL_LANG']['tl_course_date']['location'] = ['Ort', 'Geben Sie den Ort des Kurstermins ein.'];
-$GLOBALS['TL_LANG']['tl_course_date']['fully_booked'] = ['Ausgebucht', 'Markieren, wenn der Termin ausgebucht ist.'];
+
+$GLOBALS['TL_LANG']['tl_course_date']['venue'] = ['Ort', 'Geben Sie den Ort bzw. die Stadt des Kurstermins ein.'];
+$GLOBALS['TL_LANG']['tl_course_date']['postal_code'] = ['Postleitzahl', 'Geben Sie die Postleitzahl ein.'];
+$GLOBALS['TL_LANG']['tl_course_date']['street'] = ['Strasse', 'Geben Sie die Strasse ein.'];
+$GLOBALS['TL_LANG']['tl_course_date']['house_number'] = ['Hausnummer', 'Geben Sie die Hausnummer ein.'];
+
+$GLOBALS['TL_LANG']['tl_course_date']['fully_booked'] = ['Ausgebucht', 'Markieren Sie diese Option, wenn der Termin ausgebucht ist.'];
 $GLOBALS['TL_LANG']['tl_course_date']['published'] = ['Veröffentlicht', 'Den Termin im Frontend anzeigen.'];
 
 $GLOBALS['TL_LANG']['tl_course_date']['date_legend'] = 'Terminangaben';
