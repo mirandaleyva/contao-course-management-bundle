@@ -56,7 +56,17 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
   ],
 
   'palettes' => [
-    'default' => '{date_legend},start_date,end_date,start_time,end_time;{location_legend},location;{status_legend},fully_booked,published',
+    '__selector__' => ['add_time'],
+
+    'default' => '
+        {date_legend},start_date,end_date,add_time;
+        {location_legend},location;
+        {status_legend},fully_booked,published
+    ',
+  ],
+
+  'subpalettes' => [
+    'add_time' => 'start_time,end_time',
   ],
 
   'fields' => [
@@ -96,6 +106,14 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
         'mandatory' => true,
       ],
       'sql' => "varchar(10) NOT NULL default ''",
+    ],
+    'add_time' => [
+      'inputType' => 'checkbox',
+      'eval' => [
+        'submitOnChange' => true,
+        'tl_class' => 'w50 m12',
+      ],
+      'sql' => "char(1) NOT NULL default ''",
     ],
     'start_time' => [
       'inputType' => 'text',
