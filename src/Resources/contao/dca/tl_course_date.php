@@ -148,7 +148,7 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
         'mandatory' => true,
       ],
       'save_callback' => [
-        ['tl_course_date', 'validateEndDate'],
+        ['tl_course_date', 'validateEndTime'],
       ],
       'sql' => "varchar(5) NOT NULL default ''",
     ],
@@ -211,15 +211,21 @@ class tl_course_date
 {
   public function validateEndDate($value, DataContainer $dc)
   {
-    $startDate = \Contao\Input::post('start_date') ?: $dc->activeRecord->start_date;
+    $startDate = $dc->activeRecord->start_date;
 
-    if ($startDate && $value) {
-      $start = strtotime($startDate);
-      $end = strtotime($value);
+    if ($dc->field === 'start_date') {
+      $startDate = $value;
+    }
 
-      if ($end < $start) {
-        throw new \Exception('Das Enddatum darf nicht vor dem Startdatum liegen.');
-      }
+    if (!$startDate || !$value) {
+      return $value;
+    }
+
+    $start = strtotime($startDate);
+    $end = strtotime($value);
+
+    if ($end < $start) {
+      throw new \Exception('Das Enddatum darf nicht vor dem Startdatum liegen.');
     }
 
     return $value;
@@ -228,7 +234,7 @@ class tl_course_date
   public function validateDateOverlap($value, DataContainer $dc)
   {
     $startDate = \Contao\Input::post('start_date') ?: $dc->activeRecord->start_date;
-    $pid = $dc->activeRecord->pid ?? \Contao\Input::get('pid');
+    $pid = $dc->activeRecord->pid;
     $currentId = $dc->id;
 
     if (!$startDate || !$value || !$pid) {
@@ -238,6 +244,7 @@ class tl_course_date
     $start = strtotime($startDate);
     $end = strtotime($value);
 
+    // Nur prüfen wenn logisch korrekt
     if ($end < $start) {
       return $value;
     }
