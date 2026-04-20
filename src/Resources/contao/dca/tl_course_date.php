@@ -99,6 +99,10 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
         'tl_class' => 'w50 wizard',
         'mandatory' => true,
       ],
+      'save_callback' => [
+        ['tl_course_date', 'validateDateRange'],
+        ['tl_course_date', 'validateDateOverlap'],
+      ],
       'sql' => "varchar(10) NOT NULL default ''",
     ],
     'end_date' => [
@@ -111,7 +115,7 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
         'mandatory' => true,
       ],
       'save_callback' => [
-        ['tl_course_date', 'validateEndDate'],
+        ['tl_course_date', 'validateDateRange'],
         ['tl_course_date', 'validateDateOverlap'],
       ],
       'sql' => "varchar(10) NOT NULL default ''",
@@ -135,6 +139,9 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
         'tl_class' => 'w50 wizard',
         'mandatory' => true,
       ],
+      'save_callback' => [
+        ['tl_course_date', 'validateTimeRange'],
+      ],
       'sql' => "varchar(5) NOT NULL default ''",
     ],
     'end_time' => [
@@ -148,7 +155,7 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
         'mandatory' => true,
       ],
       'save_callback' => [
-        ['tl_course_date', 'validateEndTime'],
+        ['tl_course_date', 'validateTimeRange'],
       ],
       'sql' => "varchar(5) NOT NULL default ''",
     ],
@@ -209,20 +216,21 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
 
 class tl_course_date
 {
-  public function validateEndDate($value, DataContainer $dc)
+  public function validateDateRange($value, DataContainer $dc)
   {
-    $startDate = $dc->activeRecord->start_date;
+    $startDate = Input::post('start_date') ?: ($dc->activeRecord->start_date ?? null);
+    $endDate = Input::post('end_date') ?: ($dc->activeRecord->end_date ?? null);
 
-    if ($dc->field === 'start_date') {
-      $startDate = $value;
-    }
-
-    if (!$startDate || !$value) {
+    if (!$startDate || !$endDate) {
       return $value;
     }
 
     $start = strtotime($startDate);
-    $end = strtotime($value);
+    $end = strtotime($endDate);
+
+    if ($start === false || $end === false) {
+      return $value;
+    }
 
     if ($end < $start) {
       throw new \Exception('Das Enddatum darf nicht vor dem Startdatum liegen.');
@@ -233,23 +241,27 @@ class tl_course_date
 
   public function validateDateOverlap($value, DataContainer $dc)
   {
-    $startDate = \Contao\Input::post('start_date') ?: $dc->activeRecord->start_date;
-    $pid = $dc->activeRecord->pid;
-    $currentId = $dc->id;
+    $startDate = Input::post('start_date') ?: ($dc->activeRecord->start_date ?? null);
+    $endDate = Input::post('end_date') ?: ($dc->activeRecord->end_date ?? null);
+    $pid = $dc->activeRecord->pid ?? Input::get('pid');
+    $currentId = $dc->id ?? 0;
 
-    if (!$startDate || !$value || !$pid) {
+    if (!$startDate || !$endDate || !$pid) {
       return $value;
     }
 
     $start = strtotime($startDate);
-    $end = strtotime($value);
+    $end = strtotime($endDate);
 
-    // Nur prüfen wenn logisch korrekt
+    if ($start === false || $end === false) {
+      return $value;
+    }
+
     if ($end < $start) {
       return $value;
     }
 
-    $result = \Contao\Database::getInstance()
+    $result = Database::getInstance()
       ->prepare("
                 SELECT id
                 FROM tl_course_date
@@ -258,7 +270,7 @@ class tl_course_date
                 AND start_date <= ?
                 AND end_date >= ?
             ")
-      ->execute($pid, $currentId ?: 0, $value, $startDate);
+      ->execute($pid, $currentId, $endDate, $startDate);
 
     if ($result->numRows > 0) {
       throw new \Exception('Der Kurstermin überschneidet sich mit einem bestehenden Termin.');
@@ -267,15 +279,29 @@ class tl_course_date
     return $value;
   }
 
-  public function validateEndTime($value, DataContainer $dc)
+  public function validateTimeRange($value, DataContainer $dc)
   {
-    $addTime = \Contao\Input::post('add_time');
-    $startTime = \Contao\Input::post('start_time');
+    $addTime = Input::post('add_time') ?: ($dc->activeRecord->add_time ?? null);
+    $startTime = Input::post('start_time') ?: ($dc->activeRecord->start_time ?? null);
+    $endTime = Input::post('end_time') ?: ($dc->activeRecord->end_time ?? null);
 
-    if ($addTime && $startTime && $value) {
-      if (strtotime($value) <= strtotime($startTime)) {
-        throw new \Exception('Die Endzeit muss nach der Startzeit liegen.');
-      }
+    if (!$addTime) {
+      return $value;
+    }
+
+    if (!$startTime || !$endTime) {
+      return $value;
+    }
+
+    $start = strtotime($startTime);
+    $end = strtotime($endTime);
+
+    if ($start === false || $end === false) {
+      return $value;
+    }
+
+    if ($end <= $start) {
+      throw new \Exception('Die Endzeit muss nach der Startzeit liegen.');
     }
 
     return $value;
