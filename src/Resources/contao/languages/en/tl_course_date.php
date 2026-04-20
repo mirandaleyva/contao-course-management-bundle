@@ -2,6 +2,7 @@
 
 $GLOBALS['TL_LANG']['tl_course_date']['start_date'] = ['Start date', 'Enter the start date.'];
 $GLOBALS['TL_LANG']['tl_course_date']['end_date'] = ['End date', 'Enter the end date.'];
+$GLOBALS['TL_LANG']['tl_course_date']['add_time'] = ['Add Timen'];
 $GLOBALS['TL_LANG']['tl_course_date']['start_time'] = ['Start time', 'Enter the start time.'];
 $GLOBALS['TL_LANG']['tl_course_date']['end_time'] = ['End time', 'Enter the end time.'];
 $GLOBALS['TL_LANG']['tl_course_date']['location'] = ['Location', 'Enter the course date location.'];

@@ -3,6 +3,7 @@
 $GLOBALS['TL_LANG']['tl_course_date']['start_date'] = ['Startdatum', 'Geben Sie das Startdatum ein.'];
 $GLOBALS['TL_LANG']['tl_course_date']['end_date'] = ['Enddatum', 'Geben Sie das Enddatum ein.'];
 $GLOBALS['TL_LANG']['tl_course_date']['start_time'] = ['Startzeit', 'Geben Sie die Startzeit ein.'];
+$GLOBALS['TL_LANG']['tl_course_date']['add_time'] = ['Zeit hinzufügen'];
 $GLOBALS['TL_LANG']['tl_course_date']['end_time'] = ['Endzeit', 'Geben Sie die Endzeit ein.'];
 $GLOBALS['TL_LANG']['tl_course_date']['location'] = ['Ort', 'Geben Sie den Ort des Kurstermins ein.'];
 $GLOBALS['TL_LANG']['tl_course_date']['fully_booked'] = ['Ausgebucht', 'Markieren, wenn der Termin ausgebucht ist.'];

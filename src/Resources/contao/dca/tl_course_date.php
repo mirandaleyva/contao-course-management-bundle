@@ -18,14 +18,14 @@ $GLOBALS['TL_DCA']['tl_course_date'] = [
   'list' => [
     'sorting' => [
       'mode' => 4,
-      'fields' => ['sorting'],
-      'flag' => 1,
+      'fields' => ['start_date'],
+      'flag' => 6,
       'panelLayout' => 'sort,filter;search,limit',
       'headerFields' => ['title'],
     ],
     'label' => [
-      'fields' => ['start_date', 'start_time', 'end_date', 'end_time'],
-      'format' => '%s | %s - %s | %s',
+      'fields' => ['start_date', 'end_date', 'location'],
+      'format' => '%s - %s | %s',
     ],
     'global_operations' => [
       'all' => [
