@@ -3,99 +3,132 @@
 use Contao\DC_Table;
 
 $GLOBALS['TL_DCA']['tl_course'] = [
-    'config' => [
-        'dataContainer' => DC_Table::class,
-        'ctable' => ['tl_course_date'],
-        'enableVersioning' => true,
-        'sql' => [
-            'keys' => [
-                'id' => 'primary',
-            ],
-        ],
+  'config' => [
+    'dataContainer' => DC_Table::class,
+    'ctable' => ['tl_course_date'],
+    'enableVersioning' => true,
+    'sql' => [
+      'keys' => [
+        'id' => 'primary',
+      ],
     ],
+  ],
 
-    'list' => [
-        'sorting' => [
-            'mode' => 1,
-            'fields' => ['sorting'],
-            'flag' => 1,
-            'panelLayout' => 'sort,filter;search,limit',
-        ],
-        'label' => [
-            'fields' => ['title'],
-            'format' => '%s',
-        ],
-        'global_operations' => [
-            'all' => [
-                'href' => 'act=select',
-                'class' => 'header_edit_all',
-                'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
-            ],
-        ],
-        'operations' => [
-            'edit' => [
-                'href' => 'act=edit',
-                'icon' => 'edit.svg',
-            ],
-            'course_dates' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_course']['course_dates'],
-                'href' => 'table=tl_course_date',
-                'icon' => 'children.svg',
-            ],
-            'copy' => [
-                'href' => 'act=paste&amp;mode=copy',
-                'icon' => 'copy.svg',
-            ],
-            'delete' => [
-                'href' => 'act=delete',
-                'icon' => 'delete.svg',
-                'attributes' => 'onclick="if(!confirm(\'Are you sure you want to delete this entry?\'))return false;Backend.getScrollOffset()"',
-            ],
-            'show' => [
-                'href' => 'act=show',
-                'icon' => 'show.svg',
-            ],
-        ],
+  'list' => [
+    'sorting' => [
+      'mode' => 1,
+      'fields' => ['sorting'],
+      'flag' => 1,
+      'panelLayout' => 'sort,filter;search,limit',
     ],
+    'label' => [
+      'fields' => ['title'],
+      'format' => '%s',
+    ],
+    'global_operations' => [
+      'all' => [
+        'href' => 'act=select',
+        'class' => 'header_edit_all',
+        'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
+      ],
+    ],
+    'operations' => [
+      'edit' => [
+        'href' => 'act=edit',
+        'icon' => 'edit.svg',
+      ],
+      'course_dates' => [
+        'label' => &$GLOBALS['TL_LANG']['tl_course']['course_dates'],
+        'href' => 'table=tl_course_date',
+        'icon' => 'children.svg',
+      ],
+      'copy' => [
+        'href' => 'act=paste&amp;mode=copy',
+        'icon' => 'copy.svg',
+      ],
+      'delete' => [
+        'href' => 'act=delete',
+        'icon' => 'delete.svg',
+        'attributes' => 'onclick="if(!confirm(\'Are you sure you want to delete this entry?\'))return false;Backend.getScrollOffset()"',
+      ],
+      'show' => [
+        'href' => 'act=show',
+        'icon' => 'show.svg',
+      ],
+    ],
+  ],
 
-    'palettes' => [
-        'default' => '{title_legend},title,form_reference;{publish_legend},published',
+  'palettes' => [
+    'default' => '
+        {general_legend},title,author;
+        {description_legend},description;
+        {media_legend},preview_image,form_reference;
+        {publish_legend},published
+    ',
+  ],
+  'fields' => [
+    'id' => [
+      'sql' => "int(10) unsigned NOT NULL auto_increment",
     ],
-
-    'fields' => [
-        'id' => [
-            'sql' => "int(10) unsigned NOT NULL auto_increment",
-        ],
-        'tstamp' => [
-            'sql' => "int(10) unsigned NOT NULL default 0",
-        ],
-        'sorting' => [
-            'sql' => "int(10) unsigned NOT NULL default 0",
-        ],
-        'title' => [
-            'inputType' => 'text',
-            'eval' => [
-                'mandatory' => true,
-                'maxlength' => 255,
-                'tl_class' => 'w50',
-            ],
-            'sql' => "varchar(255) NOT NULL default ''",
-        ],
-        'form_reference' => [
-            'inputType' => 'text',
-            'eval' => [
-                'mandatory' => true,
-                'maxlength' => 255,
-                'tl_class' => 'w50',
-            ],
-            'sql' => "varchar(255) NOT NULL default ''",
-        ],
-        'published' => [
-            'inputType' => 'checkbox',
-            'eval' => [
-                'tl_class' => 'w50 m12',
-            ],
-            'sql' => "char(1) NOT NULL default ''",
-        ],
+    'tstamp' => [
+      'sql' => "int(10) unsigned NOT NULL default 0",
     ],
+    'sorting' => [
+      'sql' => "int(10) unsigned NOT NULL default 0",
+    ],
+    'title' => [
+      'inputType' => 'text',
+      'eval' => [
+        'mandatory' => true,
+        'maxlength' => 255,
+        'tl_class' => 'w50',
+      ],
+      'sql' => "varchar(255) NOT NULL default ''",
+    ],
+    'author' => [
+      'label' => &$GLOBALS['TL_LANG']['tl_course']['author'],
+      'inputType' => 'text',
+      'eval' => [
+        'maxlength' => 255,
+        'tl_class' => 'w50',
+      ],
+      'sql' => "varchar(255) NOT NULL default ''",
+    ],
+    'description' => [
+      'label' => &$GLOBALS['TL_LANG']['tl_course']['description'],
+      'inputType' => 'textarea',
+      'eval' => [
+        'rte' => 'tinyMCE',
+        'tl_class' => 'clr',
+      ],
+      'sql' => "text NULL",
+    ],
+    'preview_image' => [
+      'label' => &$GLOBALS['TL_LANG']['tl_course']['preview_image'],
+      'inputType' => 'fileTree',
+      'eval' => [
+        'files' => true,
+        'fieldType' => 'radio',
+        'extensions' => 'jpg,jpeg,png,webp',
+        'tl_class' => 'clr',
+      ],
+      'sql' => "binary(16) NULL",
+    ],
+    'form_reference' => [
+      'inputType' => 'text',
+      'eval' => [
+        'mandatory' => true,
+        'maxlength' => 255,
+        'tl_class' => 'w50',
+      ],
+      'sql' => "varchar(255) NOT NULL default ''",
+    ],
+    'published' => [
+      'inputType' => 'checkbox',
+      'eval' => [
+        'tl_class' => 'w50 m12',
+      ],
+      'sql' => "char(1) NOT NULL default ''",
+    ],
+  ],
 ];
