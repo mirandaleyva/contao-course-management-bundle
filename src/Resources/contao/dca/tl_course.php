@@ -115,13 +115,16 @@ $GLOBALS['TL_DCA']['tl_course'] = [
       'sql' => "binary(16) NULL",
     ],
     'form_reference' => [
-      'inputType' => 'text',
+      'label' => &$GLOBALS['TL_LANG']['tl_course']['form_reference'],
+      'inputType' => 'select',
+      'options_callback' => ['tl_course', 'getForms'],
       'eval' => [
         'mandatory' => true,
-        'maxlength' => 255,
+        'includeBlankOption' => true,
+        'chosen' => true,
         'tl_class' => 'w50',
       ],
-      'sql' => "varchar(255) NOT NULL default ''",
+      'sql' => "int(10) unsigned NOT NULL default 0",
     ],
     'published' => [
       'inputType' => 'checkbox',
@@ -132,3 +135,22 @@ $GLOBALS['TL_DCA']['tl_course'] = [
     ],
   ],
 ];
+
+use Contao\FormModel;
+
+class tl_course
+{
+  public function getForms(): array
+  {
+    $options = [];
+    $forms = FormModel::findAll();
+
+    if ($forms !== null) {
+      while ($forms->next()) {
+        $options[$forms->id] = $forms->title;
+      }
+    }
+
+    return $options;
+  }
+}
