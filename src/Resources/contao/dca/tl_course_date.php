@@ -210,9 +210,7 @@ class tl_course_date
 {
   public function validateEndDate($value, DataContainer $dc)
   {
-    $startDate = Input::post('start_date');
-    $pid = $dc->activeRecord->pid ?? Input::get('pid');
-    $currentId = $dc->id;
+    $startDate = $dc->activeRecord->start_date ?? \Contao\Input::post('start_date');
 
     if ($startDate && $value) {
       $start = strtotime($startDate);
@@ -222,20 +220,22 @@ class tl_course_date
         throw new \Exception('Das Enddatum darf nicht vor dem Startdatum liegen.');
       }
 
-      $result = Database::getInstance()
+      // Überschneidungsprüfung
+      $pid = $dc->activeRecord->pid ?? \Contao\Input::get('pid');
+      $currentId = $dc->id;
+
+      $result = \Contao\Database::getInstance()
         ->prepare("
-                    SELECT id
-                    FROM tl_course_date
-                    WHERE pid = ?
-                    AND id != ?
-                    AND start_date <= ?
-                    AND end_date >= ?
-                    LIMIT 1
-                ")
+                SELECT id FROM tl_course_date
+                WHERE pid = ?
+                AND id != ?
+                AND start_date <= ?
+                AND end_date >= ?
+            ")
         ->execute($pid, $currentId ?: 0, $value, $startDate);
 
       if ($result->numRows > 0) {
-        throw new \Exception('Der Kurstermin überschneidet sich mit einem bereits bestehenden Termin dieses Kurses.');
+        throw new \Exception('Der Kurstermin überschneidet sich mit einem bestehenden Termin.');
       }
     }
 
