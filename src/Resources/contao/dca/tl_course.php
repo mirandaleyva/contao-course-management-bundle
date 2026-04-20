@@ -2,12 +2,16 @@
 
 use Contao\DC_Table;
 use Contao\FormModel;
+use Contao\Database;
 
 $GLOBALS['TL_DCA']['tl_course'] = [
   'config' => [
     'dataContainer' => DC_Table::class,
     'ctable' => ['tl_course_date'],
     'enableVersioning' => true,
+    'ondelete_callback' => [
+      ['tl_course', 'preventDeleteIfDatesExist'],
+    ],
     'sql' => [
       'keys' => [
         'id' => 'primary',
@@ -154,5 +158,21 @@ class tl_course
     }
 
     return $options;
+  }
+
+  public function preventDeleteIfDatesExist(DataContainer $dc): void
+  {
+    if (!$dc->id) {
+      return;
+    }
+
+    $count = Database::getInstance()
+      ->prepare('SELECT COUNT(*) AS count FROM tl_course_date WHERE pid = ?')
+      ->execute($dc->id)
+      ->count;
+
+    if ($count > 0) {
+      throw new \Exception('Der Kurs kann nicht gelöscht werden, solange noch Kurstermine vorhanden sind.');
+    }
   }
 }
