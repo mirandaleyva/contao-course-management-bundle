@@ -1,0 +1,70 @@
+{% if empty %}
+    <p>Aktuell sind keine Kurse mit zukünftigen Terminen verfügbar.</p>
+{% else %}
+    <div class="course-list">
+        {% for course in courses %}
+            <article class="course-item">
+                <h2>{{ course.title }}</h2>
+
+                {% if course.author %}
+                    <p><strong>Autor:</strong> {{ course.author }}</p>
+                {% endif %}
+
+                {% if course.description %}
+                    <div class="course-description">
+                        {{ course.description|raw }}
+                    </div>
+                {% endif %}
+
+                <div class="course-dates">
+                    <h3>Kurstermine</h3>
+                    <ul>
+                        {% for date in course.dates %}
+                            <li>
+                                <div>
+                                    <strong>Datum:</strong>
+                                    {{ date.start_date }}
+                                    {% if date.end_date and date.end_date != date.start_date %}
+                                        – {{ date.end_date }}
+                                    {% endif %}
+                                </div>
+
+                                {% if date.add_time %}
+                                    <div>
+                                        <strong>Zeit:</strong>
+                                        {{ date.start_time }}{% if date.end_time %} – {{ date.end_time }}{% endif %}
+                                    </div>
+                                {% endif %}
+
+                                <div>
+                                    <strong>Ort:</strong>
+                                    {{ date.venue }}
+                                    {% if date.postal_code or date.street or date.house_number %}
+                                        ,
+                                        {{ date.postal_code }}
+                                        {{ date.venue }}
+                                        {% if date.street %}
+                                            , {{ date.street }}
+                                        {% endif %}
+                                        {% if date.house_number %}
+                                            {{ date.house_number }}
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                                <div>
+                                    <strong>Status:</strong>
+                                    {% if date.fully_booked %}
+                                        Ausgebucht
+                                    {% else %}
+                                        Verfügbar
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% endif %}
