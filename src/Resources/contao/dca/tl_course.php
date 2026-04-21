@@ -124,7 +124,7 @@ $GLOBALS['TL_DCA']['tl_course'] = [
     'form_reference' => [
       'label' => &$GLOBALS['TL_LANG']['tl_course']['form_reference'],
       'inputType' => 'select',
-      'options_callback' => ['tl_course', 'getForms'],
+      'foreignKey' => 'tl_form.title',
       'eval' => [
         'mandatory' => true,
         'includeBlankOption' => true,
@@ -132,6 +132,10 @@ $GLOBALS['TL_DCA']['tl_course'] = [
         'tl_class' => 'w50',
       ],
       'sql' => "int(10) unsigned NOT NULL default 0",
+      'relation' => [
+        'type' => 'hasOne',
+        'load' => 'lazy',
+      ],
     ],
     'published' => [
       'label' => &$GLOBALS['TL_LANG']['tl_course']['published'],
