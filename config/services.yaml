@@ -4,10 +4,10 @@ services:
     autoconfigure: true
 
   MirandaLeyva\ContaoCourseManagementBundle\Controller\:
-    resource: "../../Controller/"
+    resource: "../src/Controller/"
 
   MirandaLeyva\ContaoCourseManagementBundle\Model\:
-    resource: "../../Model/"
+    resource: "../src/Model/"
 
   MirandaLeyva\ContaoCourseManagementBundle\Service\:
-    resource: "../../Service/"
+    resource: "../src/Service/"
