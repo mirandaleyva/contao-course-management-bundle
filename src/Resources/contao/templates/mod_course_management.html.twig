@@ -1,5 +1,5 @@
 {% if empty %}
-    <p>Aktuell sind keine Kurse mit zukünftigen Terminen verfügbar.</p>
+    <p>{{ labels.empty }}</p>
 {% else %}
     <div class="course-list">
         {% for course in courses %}
@@ -7,7 +7,7 @@
                 <h2>{{ course.title }}</h2>
 
                 {% if course.author %}
-                    <p><strong>Autor:</strong> {{ course.author }}</p>
+                    <p><strong>{{ labels.author }}:</strong> {{ course.author }}</p>
                 {% endif %}
 
                 {% if course.description %}
@@ -17,12 +17,12 @@
                 {% endif %}
 
                 <div class="course-dates">
-                    <h3>Kurstermine</h3>
+                    <h3>{{ labels.course_dates }}</h3>
                     <ul>
                         {% for date in course.dates %}
                             <li>
                                 <div>
-                                    <strong>Datum:</strong>
+                                    <strong>{{ labels.date }}:</strong>
                                     {{ date.start_date }}
                                     {% if date.end_date and date.end_date != date.start_date %}
                                         – {{ date.end_date }}
@@ -31,33 +31,29 @@
 
                                 {% if date.add_time %}
                                     <div>
-                                        <strong>Zeit:</strong>
+                                        <strong>{{ labels.time }}:</strong>
                                         {{ date.start_time }}{% if date.end_time %} – {{ date.end_time }}{% endif %}
                                     </div>
                                 {% endif %}
 
-                                <div>
-                                    <strong>Ort:</strong>
-                                    {{ date.venue }}
-                                    {% if date.postal_code or date.street or date.house_number %}
-                                        ,
-                                        {{ date.postal_code }}
+                                {% if date.location %}
+                                    <div>
+                                        <strong>{{ labels.location }}:</strong>
+                                        {{ date.location }}
+                                    </div>
+                                {% elseif date.venue %}
+                                    <div>
+                                        <strong>{{ labels.location }}:</strong>
                                         {{ date.venue }}
-                                        {% if date.street %}
-                                            , {{ date.street }}
-                                        {% endif %}
-                                        {% if date.house_number %}
-                                            {{ date.house_number }}
-                                        {% endif %}
-                                    {% endif %}
-                                </div>
+                                    </div>
+                                {% endif %}
 
                                 <div>
-                                    <strong>Status:</strong>
+                                    <strong>{{ labels.status }}:</strong>
                                     {% if date.fully_booked %}
-                                        Ausgebucht
+                                        {{ labels.fully_booked }}
                                     {% else %}
-                                        Verfügbar
+                                        {{ labels.available }}
                                     {% endif %}
                                 </div>
                             </li>
