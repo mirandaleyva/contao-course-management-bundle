@@ -7,12 +7,12 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Database;
 use Contao\ModuleModel;
+use Contao\PageModel;
 use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Contao\PageModel;
 
-#[AsFrontendModule(type: 'course_list', category: 'courses', template: 'mod_course_management')]
+#[AsFrontendModule(type: 'course_list', category: 'courses', template: 'mod_course_list')]
 class CourseListController extends AbstractFrontendModuleController
 {
   protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
@@ -21,6 +21,17 @@ class CourseListController extends AbstractFrontendModuleController
 
     $order = $model->course_order === 'desc' ? 'DESC' : 'ASC';
     $todayTimestamp = strtotime('today');
+
+    $detailPage = null;
+    $detailUrlBase = null;
+
+    if ($model->jumpTo) {
+      $detailPage = PageModel::findPublishedById($model->jumpTo);
+
+      if ($detailPage !== null) {
+        $detailUrlBase = $detailPage->getFrontendUrl();
+      }
+    }
 
     $coursesResult = Database::getInstance()
       ->prepare("
@@ -36,14 +47,15 @@ class CourseListController extends AbstractFrontendModuleController
     while ($coursesResult->next()) {
       $datesResult = Database::getInstance()
         ->prepare("
-                    SELECT *
+                    SELECT id, start_date, end_date
                     FROM tl_course_date
                     WHERE pid = ?
                     AND published = '1'
                 ")
         ->execute($coursesResult->id);
 
-      $dates = [];
+      $hasUpcomingDates = false;
+      $nextDateTimestamp = null;
 
       while ($datesResult->next()) {
         $startTimestamp = $this->parseDateValue($datesResult->start_date);
@@ -53,39 +65,22 @@ class CourseListController extends AbstractFrontendModuleController
           continue;
         }
 
-        $addressParts = array_filter([
-          trim(($datesResult->postal_code ?: '') . ' ' . ($datesResult->venue ?: '')),
-          trim(implode(' ', array_filter([$datesResult->street, $datesResult->house_number]))),
-        ]);
+        $hasUpcomingDates = true;
 
-        $dates[] = [
-          'id' => $datesResult->id,
-          'start_date' => $this->formatDateValue($datesResult->start_date),
-          'end_date' => $this->formatDateValue($datesResult->end_date),
-          'add_time' => (bool) $datesResult->add_time,
-          'start_time' => $this->formatTimeValue($datesResult->start_time),
-          'end_time' => $this->formatTimeValue($datesResult->end_time),
-          'venue' => $datesResult->venue,
-          'location' => implode(', ', $addressParts),
-          'fully_booked' => (bool) $datesResult->fully_booked,
-          '_sort_start' => $startTimestamp,
-          '_sort_time' => $this->parseTimeValue($datesResult->start_time),
-        ];
+        if (null === $nextDateTimestamp || $startTimestamp < $nextDateTimestamp) {
+          $nextDateTimestamp = $startTimestamp;
+        }
       }
 
-      if (empty($dates)) {
+      if (!$hasUpcomingDates) {
         continue;
       }
 
-      usort($dates, static function (array $left, array $right): int {
-        return [$left['_sort_start'], $left['_sort_time']] <=> [$right['_sort_start'], $right['_sort_time']];
-      });
+      $detailUrl = null;
 
-      $dates = array_map(static function (array $date): array {
-        unset($date['_sort_start'], $date['_sort_time']);
-
-        return $date;
-      }, $dates);
+      if ($detailUrlBase !== null) {
+        $detailUrl = $detailUrlBase . '?course=' . $coursesResult->id;
+      }
 
       $courses[] = [
         'id' => $coursesResult->id,
@@ -94,22 +89,18 @@ class CourseListController extends AbstractFrontendModuleController
         'description' => $coursesResult->description,
         'form_reference' => $coursesResult->form_reference,
         'preview_image' => $coursesResult->preview_image,
-        'dates' => $dates,
+        'detail_url' => $detailUrl,
+        'next_date' => null === $nextDateTimestamp ? '' : date('d.m.Y', $nextDateTimestamp),
       ];
     }
 
     $template->set('courses', $courses);
     $template->set('empty', empty($courses));
     $template->set('labels', [
-      'empty' => $GLOBALS['TL_LANG']['MSC']['course_list_empty'] ?? 'There are currently no courses with upcoming dates available.',
-      'author' => $GLOBALS['TL_LANG']['MSC']['course_list_author'] ?? 'Author',
-      'course_dates' => $GLOBALS['TL_LANG']['MSC']['course_list_dates'] ?? 'Course dates',
-      'date' => $GLOBALS['TL_LANG']['MSC']['course_list_date'] ?? 'Date',
-      'time' => $GLOBALS['TL_LANG']['MSC']['course_list_time'] ?? 'Time',
-      'location' => $GLOBALS['TL_LANG']['MSC']['course_list_location'] ?? 'Location',
-      'status' => $GLOBALS['TL_LANG']['MSC']['course_list_status'] ?? 'Status',
-      'fully_booked' => $GLOBALS['TL_LANG']['MSC']['course_list_fully_booked'] ?? 'Fully booked',
-      'available' => $GLOBALS['TL_LANG']['MSC']['course_list_available'] ?? 'Available',
+      'empty' => $GLOBALS['TL_LANG']['MSC']['course_list_empty'] ?? 'Aktuell sind keine Kurse verfügbar.',
+      'author' => $GLOBALS['TL_LANG']['MSC']['course_list_author'] ?? 'Autor',
+      'details' => $GLOBALS['TL_LANG']['MSC']['course_list_details'] ?? 'Details anzeigen',
+      'next_date' => $GLOBALS['TL_LANG']['MSC']['course_list_next_date'] ?? 'Nächster Termin',
     ]);
 
     return $template->getResponse();
@@ -128,38 +119,5 @@ class CourseListController extends AbstractFrontendModuleController
     $timestamp = strtotime($value);
 
     return false === $timestamp ? null : strtotime(date('Y-m-d', $timestamp));
-  }
-
-  private function formatDateValue(?string $value): string
-  {
-    if (!$value) {
-      return '';
-    }
-
-    $timestamp = $this->parseDateValue($value);
-
-    return null === $timestamp ? $value : date('d.m.Y', $timestamp);
-  }
-
-  private function parseTimeValue(?string $value): int
-  {
-    if (!$value) {
-      return 0;
-    }
-
-    $timestamp = strtotime($value);
-
-    return false === $timestamp ? 0 : ((int) date('H', $timestamp) * 60) + (int) date('i', $timestamp);
-  }
-
-  private function formatTimeValue(?string $value): string
-  {
-    if (!$value) {
-      return '';
-    }
-
-    $timestamp = strtotime($value);
-
-    return false === $timestamp ? $value : date('H:i', $timestamp);
   }
 }
