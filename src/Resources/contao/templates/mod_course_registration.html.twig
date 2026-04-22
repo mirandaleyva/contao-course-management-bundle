@@ -1,0 +1,67 @@
+{% if empty %}
+    <p>{{ message }}</p>
+{% else %}
+    <article class="course-registration">
+        <h1>{{ course.title }}</h1>
+
+        {% if course.preview_image %}
+            <div class="course-image">
+                <img src="{{ course.preview_image }}" alt="{{ course.title }}">
+            </div>
+        {% endif %}
+
+        {% if course.author %}
+            <p><strong>Autor:</strong> {{ course.author }}</p>
+        {% endif %}
+
+        {% if course.description %}
+            <div class="course-description">
+                {{ course.description|raw }}
+            </div>
+        {% endif %}
+
+        <div class="course-date">
+            <h2>{{ labels.form }}</h2>
+
+            <p>
+                <strong>{{ labels.date }}:</strong>
+                {{ date.start_date }}
+                {% if date.end_date and date.end_date != date.start_date %}
+                    – {{ date.end_date }}
+                {% endif %}
+            </p>
+
+            {% if date.add_time %}
+                <p>
+                    <strong>{{ labels.time }}:</strong>
+                    {{ date.start_time }}
+                    {% if date.end_time %}
+                        – {{ date.end_time }}
+                    {% endif %}
+                </p>
+            {% endif %}
+
+            {% if date.location %}
+                <p>
+                    <strong>{{ labels.location }}:</strong>
+                    {{ date.location }}
+                </p>
+            {% endif %}
+
+            <p>
+                <strong>{{ labels.status }}:</strong>
+                {% if date.fully_booked %}
+                    {{ labels.fully_booked }}
+                {% else %}
+                    {{ labels.available }}
+                {% endif %}
+            </p>
+        </div>
+
+        {% if not date.fully_booked and course.form_reference %}
+            <div class="course-form">
+                {{ insert_tag('insert_form::' ~ course.form_reference)|raw }}
+            </div>
+        {% endif %}
+    </article>
+{% endif %}

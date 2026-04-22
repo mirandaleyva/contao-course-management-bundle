@@ -34,3 +34,14 @@ $GLOBALS['TL_LANG']['MSC']['course_reader_status'] = 'Status';
 $GLOBALS['TL_LANG']['MSC']['course_reader_fully_booked'] = 'Fully booked';
 $GLOBALS['TL_LANG']['MSC']['course_reader_available'] = 'Available';
 $GLOBALS['TL_LANG']['MSC']['course_reader_register'] = 'Register now';
+
+$GLOBALS['TL_LANG']['FMD']['course_registration'] = ['Course registration', 'Displays the registration for a selected course date.'];
+
+$GLOBALS['TL_LANG']['MSC']['course_registration_empty'] = 'No valid course date was selected.';
+$GLOBALS['TL_LANG']['MSC']['course_registration_date'] = 'Date';
+$GLOBALS['TL_LANG']['MSC']['course_registration_time'] = 'Time';
+$GLOBALS['TL_LANG']['MSC']['course_registration_location'] = 'Location';
+$GLOBALS['TL_LANG']['MSC']['course_registration_status'] = 'Status';
+$GLOBALS['TL_LANG']['MSC']['course_registration_fully_booked'] = 'Fully booked';
+$GLOBALS['TL_LANG']['MSC']['course_registration_available'] = 'Available';
+$GLOBALS['TL_LANG']['MSC']['course_registration_form'] = 'Registration';
