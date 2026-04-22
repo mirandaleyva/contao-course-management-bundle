@@ -13,6 +13,6 @@ class MirandaLeyvaContaoCourseManagementBundle extends AbstractBundle
     ContainerConfigurator $containerConfigurator,
     ContainerBuilder $containerBuilder,
   ): void {
-    $containerConfigurator->import(__DIR__ . '/Resources/config/services.yaml');
+    $containerConfigurator->import('../config/services.yaml');
   }
 }
