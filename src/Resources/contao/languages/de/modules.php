@@ -19,3 +19,5 @@ $GLOBALS['TL_LANG']['MSC']['course_list_location'] = 'Ort';
 $GLOBALS['TL_LANG']['MSC']['course_list_status'] = 'Status';
 $GLOBALS['TL_LANG']['MSC']['course_list_fully_booked'] = 'Ausgebucht';
 $GLOBALS['TL_LANG']['MSC']['course_list_available'] = 'Verfügbar';
+
+$GLOBALS['TL_LANG']['tl_module']['registration_jumpTo'] = ['Anmeldeseite', 'Wählen Sie die Seite aus, auf der das Anmeldeformular angezeigt werden soll.'];
