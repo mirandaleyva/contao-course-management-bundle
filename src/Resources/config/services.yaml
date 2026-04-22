@@ -3,9 +3,11 @@ services:
     autowire: true
     autoconfigure: true
 
-  MirandaLeyva\ContaoCourseManagementBundle\:
-    resource: "../../"
-    exclude:
-      - "../../DependencyInjection/"
-      - "../../Entity/"
-      - "../../Kernel.php"
+  MirandaLeyva\ContaoCourseManagementBundle\Controller\:
+    resource: "../../Controller/"
+
+  MirandaLeyva\ContaoCourseManagementBundle\Model\:
+    resource: "../../Model/"
+
+  MirandaLeyva\ContaoCourseManagementBundle\Service\:
+    resource: "../../Service/"
