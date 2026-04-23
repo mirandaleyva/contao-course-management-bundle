@@ -244,6 +244,10 @@ class tl_course_date
     $startDate = Input::post('start_date') ?: ($dc->activeRecord->start_date ?? null);
     $endDate = Input::post('end_date') ?: ($dc->activeRecord->end_date ?? null);
 
+    $addTime = Input::post('add_time') ?: ($dc->activeRecord->add_time ?? null);
+    $startTime = Input::post('start_time') ?: ($dc->activeRecord->start_time ?? null);
+    $endTime = Input::post('end_time') ?: ($dc->activeRecord->end_time ?? null);
+
     $pid = $dc->activeRecord->pid ?? Input::get('pid');
     $currentId = $dc->id ?? 0;
 
@@ -258,27 +262,75 @@ class tl_course_date
       return $value;
     }
 
-    // ❗ WICHTIG: zuerst Datumsvalidierung
     if ($end < $start) {
       return $value;
     }
 
     $result = Database::getInstance()
       ->prepare("
-            SELECT id
+            SELECT id, start_date, end_date, add_time, start_time, end_time
             FROM tl_course_date
             WHERE pid = ?
-            AND id != ?
-            AND start_date <= ?
-            AND end_date >= ?
+              AND id != ?
+              AND start_date <= ?
+              AND end_date >= ?
         ")
       ->execute($pid, $currentId, $end, $start);
 
-    if ($result->numRows > 0) {
+    while ($result->next()) {
+      $existingStart = (int) $result->start_date;
+      $existingEnd = (int) $result->end_date;
+
+      if (!is_numeric($result->start_date)) {
+        $existingStart = strtotime($result->start_date);
+      }
+      if (!is_numeric($result->end_date)) {
+        $existingEnd = strtotime($result->end_date);
+      }
+
+      if ($existingStart === false || $existingEnd === false) {
+        continue;
+      }
+
+      if ($existingStart > $end || $existingEnd < $start) {
+        continue;
+      }
+
+      $existingHasTime = !empty($result->add_time) && !empty($result->start_time) && !empty($result->end_time);
+      $newHasTime = !empty($addTime) && !empty($startTime) && !empty($endTime);
+
+      if ($existingHasTime && $newHasTime && $existingStart === $start && $existingEnd === $end) {
+        $newStartMinutes = $this->timeToMinutes($startTime);
+        $newEndMinutes = $this->timeToMinutes($endTime);
+
+        $existingStartMinutes = $this->timeToMinutes($result->start_time);
+        $existingEndMinutes = $this->timeToMinutes($result->end_time);
+
+        if (
+          $newStartMinutes < $existingEndMinutes &&
+          $newEndMinutes > $existingStartMinutes
+        ) {
+          throw new \Exception('Der Kurstermin überschneidet sich mit einem bestehenden Termin.');
+        }
+
+        continue;
+      }
+
       throw new \Exception('Der Kurstermin überschneidet sich mit einem bestehenden Termin.');
     }
 
     return $value;
+  }
+
+  private function timeToMinutes(string $time): int
+  {
+    $timestamp = strtotime($time);
+
+    if ($timestamp === false) {
+      return 0;
+    }
+
+    return ((int) date('H', $timestamp) * 60) + (int) date('i', $timestamp);
   }
 
   public function validateTimeRange($value, DataContainer $dc)
