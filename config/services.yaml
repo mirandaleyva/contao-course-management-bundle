@@ -8,6 +8,3 @@ services:
 
   MirandaLeyva\ContaoCourseManagementBundle\Model\:
     resource: "../src/Model/"
-
-  MirandaLeyva\ContaoCourseManagementBundle\Service\:
-    resource: "../src/Service/"
